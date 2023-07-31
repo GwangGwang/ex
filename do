@@ -95,6 +95,7 @@ test() {
     echo "Testing:"
     echo $PACKAGE_NAMES
     ./bin/gotestsum -- -coverprofile=coverage.txt --junitfile="${reportDir}/junit.xml" -- -count=1 $PACKAGE_NAMES
+}
 
 help_release="Make a release"
 release() {
