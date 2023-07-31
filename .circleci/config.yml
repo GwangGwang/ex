@@ -93,8 +93,7 @@ jobs:
     environment:
       GOMAXPROCS: 4
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
       - setup
       - run:
           name: Run tests
