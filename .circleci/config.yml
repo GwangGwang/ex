@@ -96,7 +96,15 @@ jobs:
       - setup
       - run:
           name: Run tests
-          command: ./do test
+          shell: /bin/bash
+          command: |
+            set -e
+            cd /home/circleci/project
+            PACKAGES="$(go list ./... | circleci tests split --split-by=timings)"
+            export NAMES=$(echo $PACKAGES | tr -d '\n')
+            echo "Testing:"
+            echo $NAMES
+            gotestsum --junitfile="test-reports/junit.xml" -- -covermode=count -coverprofile=test-reports/coverage.out -p 1 $NAMES
       - codecov/upload    
       - store_test_results:
           path: test-reports
