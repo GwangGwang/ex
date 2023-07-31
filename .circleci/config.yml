@@ -6,7 +6,6 @@ orbs:
 
 x-data:
   go_versions: &go_versions
-    - '1.19'
     - '1.20'
 
 workflows:
@@ -89,7 +88,7 @@ jobs:
           '--address', ':9124',
         ]
     resource_class: large
-    parallelism: 4
+    parallelism: 5
     environment:
       GOMAXPROCS: 4
     steps:
@@ -99,7 +98,8 @@ jobs:
           name: Run tests
           command: ./do test
       - codecov/upload    
-      - cleanup
+      - store_test_results:
+          path: test-reports
 
 commands:
   setup:
