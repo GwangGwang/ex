@@ -67,6 +67,7 @@ run-goimports () {
 # shellcheck disable=SC2034
 help_lint="Run golanci-lint to lint go files."
 lint() {
+    echo "${@:-./...}"
     ./bin/golangci-lint run "${@:-./...}"
 
     local files
@@ -90,7 +91,7 @@ help_test="Run the tests"
 test() {
     mkdir -p "${reportDir}"
     # -count=1 is used to forcibly disable test result caching
-    PACKAGES="$(go list github.com/circleci/ex/... | circleci tests split --split-by=timings)"
+    PACKAGES="${@:-./...}" | circleci tests split --split-by=timings
     export PACKAGE_NAMES=$(echo $PACKAGES | tr -d '\n')
     echo "Testing:"
     echo $PACKAGE_NAMES
