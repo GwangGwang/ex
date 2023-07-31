@@ -90,8 +90,7 @@ help_test="Run the tests"
 test() {
     mkdir -p "${reportDir}"
     # -count=1 is used to forcibly disable test result caching
-    ls
-    PACKAGES="$(go list ./... | circleci tests split --split-by=timings)"
+    PACKAGES="$(go list github.com/circleci/ex/... | circleci tests split --split-by=timings)"
     export PACKAGE_NAMES=$(echo $PACKAGES | tr -d '\n')
     echo "Testing:"
     echo $PACKAGE_NAMES
