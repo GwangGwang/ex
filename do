@@ -89,13 +89,15 @@ lint-report() {
 
 help_test="Run the tests"
 test() {
+    echo "${@:-./...}"
+    cd /home/circleci/project/
     mkdir -p "${reportDir}"
     # -count=1 is used to forcibly disable test result caching
-    PACKAGES="${@:-./...}" | circleci tests split --split-by=timings
+    export PACKAGES="${go list ./... | circleci tests split --split-by=timings}"
     export PACKAGE_NAMES=$(echo $PACKAGES | tr -d '\n')
     echo "Testing:"
     echo $PACKAGE_NAMES
-    ./bin/gotestsum -- -coverprofile=coverage.txt --junitfile="${reportDir}/junit.xml" -- -count=1 $PACKAGE_NAMES
+    ./bin/gotestsum -- -coverprofile=coverage.out --junitfile="${reportDir}/junit.xml" -- -count=1 $PACKAGE_NAMES
 }
 
 help_release="Make a release"
