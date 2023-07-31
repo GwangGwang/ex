@@ -88,7 +88,7 @@ jobs:
           '--address', ':9124',
         ]
     resource_class: large
-    parallelism: 1
+    parallelism: 6
     environment:
       GOMAXPROCS: 4
     steps:
